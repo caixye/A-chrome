@@ -26,7 +26,7 @@ jobs:
 
       - name: Install curl
         run: |
-          Invoke-WebRequest -Uri https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip
+          Invoke-WebRequest -Uri https://curl.se/windows/dl-8.2.1_4/curl-8.2.1_4-win64-mingw.zip -OutFile curl.zip
           7z x curl.zip -oC:\curl
           Remove-Item curl.zip
           
