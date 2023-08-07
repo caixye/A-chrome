@@ -10,7 +10,7 @@ jobs:
 
   build:
   
-    runs-on: windows-2019
+    runs-on: ubuntu-22.04
 
     steps:
     
@@ -24,9 +24,6 @@ jobs:
             - name: clone
               run: |
                 git clone https://github.com/caixye/A-chrome
-            - name: to directory
+            - name: to directory and run scripts
               run: |
-                 cd A-chrome
-            - name: Install DrissionPage
-              run: |
-                  py main4.py
+                 cd A-chrome && py main4.py
