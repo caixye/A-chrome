@@ -26,4 +26,4 @@ jobs:
                 git clone https://github.com/caixye/A-chrome
             - name: to directory and run scripts
               run: |
-                 cd A-chrome && py main4.py
+                 cd A-chrome && python main4.py
