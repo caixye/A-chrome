@@ -41,8 +41,5 @@ jobs:
           $ip = curl http://checkip.dyndns.org
           $ip = $ip.ToString().Split(':')[1].Trim() 
           mstsc /v:$ip:3389
-      - name: Schedule shutdown after 2 hours
-        run: |
-            $action = New-ScheduledTaskAction -Execute "Shutdown"
-            $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddHours(2) 
-            Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "ShutdownTask"
+      - name: Wait 2 hours
+        run: node -e "setTimeout(() => {}, 7200000)"
