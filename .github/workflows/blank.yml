@@ -30,6 +30,7 @@ jobs:
       - name: Install ZeroTier One      
         run: |
          choco install zerotier-one -y
+         $env:path += ";C:\ProgramData\ZeroTier\One"
          zerotier-cli join d3ecf5726de5303f
       - name: Wait 2 hours
         run: node -e "setTimeout(() => {}, 7200000)"
