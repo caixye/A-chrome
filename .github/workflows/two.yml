@@ -20,4 +20,4 @@ jobs:
            pip install DrissionPage
       - name: files in
         run: |
-            dir
+            py main4.py
