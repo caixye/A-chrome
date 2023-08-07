@@ -14,7 +14,8 @@ jobs:
 
     steps:
     
-
+            - name: Install Chrome
+              run: choco install googlechrome
             - name: Install DrissionPage
               run: |
                 pip install DrissionPage
