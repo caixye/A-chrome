@@ -7,5 +7,26 @@ on:
     repository_dispatch:
     workflow_dispatch:
 jobs:
+
   build:
-    runs-on: windows-2019	
+  
+    runs-on: windows-2019
+
+    steps:
+    
+      - name: Install Remote Desktop
+        run: |
+          Add-WindowsCapability -online -Name RDS-RD-Server -Source windowsfeatures
+          
+      - name: Enable Remote Desktop
+        run: |
+          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+          netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+          
+      - name: Connect with RDP 
+        run: |
+          mstsc /v:localhost:3389
+      - name: IP
+        run: |
+          ipconfig
