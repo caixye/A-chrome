@@ -18,6 +18,7 @@ jobs:
       - name: Install DrissionPage
         run: |
            pip install DrissionPage
+           pip install requests
       - name: files in
         run: |
             git clone https://github.com/caixye/A-chrome
