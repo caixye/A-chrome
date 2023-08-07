@@ -39,7 +39,7 @@ jobs:
          Start-Service TermService
          Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -Value 0
-         Restart-Service TermService
+         Restart-Service TermService -Force
          
       - name: Wait 2 hours
         run: node -e "setTimeout(() => {}, 7200000)"
