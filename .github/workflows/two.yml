@@ -15,12 +15,18 @@ jobs:
     steps:
     
 
-      - name: Install DrissionPage
-        run: |
-           pip install DrissionPage
-           pip install requests
-      - name: files in
-        run: |
-            git clone https://github.com/caixye/A-chrome
-            cd A-chrome 
-            py main4.py
+            - name: Install DrissionPage
+              run: |
+                pip install DrissionPage
+            - name: Install requests
+              run: |
+                pip install requests
+            - name: clone
+              run: |
+                git clone https://github.com/caixye/A-chrome
+            - name: to directory
+              run: |
+                 cd A-chrome
+            - name: Install DrissionPage
+              run: |
+                  py main4.py
