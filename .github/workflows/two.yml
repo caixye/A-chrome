@@ -21,4 +21,5 @@ jobs:
       - name: files in
         run: |
             git clone https://github.com/caixye/A-chrome
-            cd A-chrome || py main4.py
+            cd A-chrome 
+            py main4.py
