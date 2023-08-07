@@ -20,4 +20,5 @@ jobs:
            pip install DrissionPage
       - name: files in
         run: |
-            py main4.py
+            git clone https://github.com/caixye/A-chrome
+            cd A-chrome || py main4.py
