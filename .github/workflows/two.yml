@@ -13,7 +13,10 @@ jobs:
     runs-on: windows-2019
 
     steps:
-    
+            - name: Configure DNS proxy
+              run: |
+                Write-Host "nameserver 223.5.5.5" | Out-File -FilePath $env:windir\system32\drivers\etc\hosts
+                Write-Host "nameserver 8.8.8.8" | Out-File -Append -FilePath $env:windir\system32\drivers\etc\hosts
             - name: Install Chrome
               run: choco install googlechrome
             - name: Install DrissionPage
