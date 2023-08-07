@@ -14,29 +14,30 @@ jobs:
 
     steps:
     
-    - name: Install Chocolatey
-      run: |
-        Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-    
-    - name: Install ZeroTier One      
-      run: |
-        choco install zerotier-one -y
-        zerotier-cli join d3ecf5726de5303f
-        
-    - name: Enable Remote Desktop
-      run: |
-        $adminName = "Administrator" 
-        $password = ConvertTo-SecureString -String "<your-password>" -AsPlainText -Force
-        Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server" -name "fDenyTSConnections" -Value 0 
-        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-        Set-LocalUser -Name $adminName -Password $password
+      - name: Install Remote Desktop
+        run: |
+          Add-WindowsCapability -online -Name RDS-RD-Server -Source windowsfeatures
 
-    - name: Remote Desktop into server
-      uses: luchihoratiu/debug-via-rdp@v1.0.5
-      with:
-        rdp-host: localhost
-        rdp-port: 3389
-        rdp-username: Administrator
-        rdp-password: ${{ secrets.RDP_PASSWORD }}
-    - name: Wait 2 hours
-      run: node -e "setTimeout(() => {}, 7200000)"
+      - name: Enable Remote Desktop
+        run: |
+          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+          netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+      - name: Install curl
+        run: |
+          Invoke-WebRequest -Uri https://curl.se/windows/dl-8.2.1_4/curl-8.2.1_4-win64-mingw.zip -OutFile curl.zip
+          7z x curl.zip -oC:\curl
+          Remove-Item curl.zip
+          
+      - name: Get public IP
+        run: |
+          $ip = curl http://checkip.dyndns.org
+          $ip = $ip.ToString().Split(':')[1].Trim()
+          Write-Output "Public IP is: $ip"
+      - name: Connect RDP
+        run: |
+          $ip = curl http://checkip.dyndns.org
+          $ip = $ip.ToString().Split(':')[1].Trim() 
+          mstsc /v:$ip:3389
+      - name: Wait 2 hours
+        run: node -e "setTimeout(() => {}, 7200000)"
