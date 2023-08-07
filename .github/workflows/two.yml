@@ -14,15 +14,7 @@ jobs:
 
     steps:
     
-      - name: Install Remote Desktop
-        run: |
-          Add-WindowsCapability -online -Name RDS-RD-Server -Source windowsfeatures
 
-      - name: Enable Remote Desktop
-        run: |
-          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
-          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
-          netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
       - name: Install Chocolatey
         run: |
            Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -32,10 +24,20 @@ jobs:
          choco install zerotier-one -y
          $env:path += ";C:\Program Files (x86)\ZeroTier\One"
          zerotier-cli join d3ecf5726de5303f
-         net user Administrator /active:yes 
-         net user Administrator yu090517
-         net localgroup "Remote Desktop Users" Administrator /add
-         Start-Service TermService
-         sc stop TermService
+         net user admin /add 
+         net user admin yu090517
+         net localgroup "Remote Desktop Users" admin /add
+         Set-Service -Name TermService -StartupType Automatic
+         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+      - name: Install Remote Desktop
+        run: |
+          Add-WindowsCapability -online -Name RDS-RD-Server -Source windowsfeatures
+
+      - name: Enable Remote Desktop
+        run: |
+          reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+          netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -Value 0
       - name: Wait 2 hours
         run: node -e "setTimeout(() => {}, 7200000)"
