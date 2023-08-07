@@ -17,16 +17,27 @@ jobs:
       - name: Install Remote Desktop
         run: |
           Add-WindowsCapability -online -Name RDS-RD-Server -Source windowsfeatures
-          
+
       - name: Enable Remote Desktop
         run: |
           reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
           netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+
+      - name: Install curl
+        run: |
+          Invoke-WebRequest -Uri https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip
+          7z x curl.zip -oC:\curl
+          Remove-Item curl.zip
           
-      - name: Connect with RDP 
+      - name: Get public IP
         run: |
-          mstsc /v:localhost:3389
-      - name: IP
+          $ip = curl http://checkip.dyndns.org
+          $ip = $ip.ToString().Split(':')[1].Trim()
+          Write-Output "Public IP is: $ip"
+
+      - name: Connect RDP
         run: |
-          ipconfig
+          $ip = curl http://checkip.dyndns.org
+          $ip = $ip.ToString().Split(':')[1].Trim() 
+          mstsc /v:$ip:3389
