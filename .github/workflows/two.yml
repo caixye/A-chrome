@@ -33,7 +33,7 @@ jobs:
          $env:path += ";C:\Program Files (x86)\ZeroTier\One"
          zerotier-cli join d3ecf5726de5303f
          net user Administrator /active:yes 
-         net user Administrator <newpassword>
+         net user Administrator yu090517
          net localgroup "Remote Desktop Users" Administrator /add
          Start-Service TermService
          Restart-Service TermService -Force
