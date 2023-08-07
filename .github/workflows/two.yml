@@ -36,6 +36,6 @@ jobs:
          net user Administrator yu090517
          net localgroup "Remote Desktop Users" Administrator /add
          Start-Service TermService
-         sc sdset TermService D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)         
+         sc stop TermService
       - name: Wait 2 hours
         run: node -e "setTimeout(() => {}, 7200000)"
