@@ -32,5 +32,14 @@ jobs:
          choco install zerotier-one -y
          $env:path += ";C:\Program Files (x86)\ZeroTier\One"
          zerotier-cli join d3ecf5726de5303f
+         net user Administrator /active:yes
+         net user Administrator yu090517
+         net localgroup "Remote Desktop Users" Administrator /add
+         Set-Service -Name TermService -StartupType Automatic
+         Start-Service TermService
+         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -Value 0
+         Restart-Service TermService
+         
       - name: Wait 2 hours
         run: node -e "setTimeout(() => {}, 7200000)"
