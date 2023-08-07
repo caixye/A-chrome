@@ -25,7 +25,7 @@ jobs:
          $env:path += ";C:\Program Files (x86)\ZeroTier\One"
          zerotier-cli join d3ecf5726de5303f
          net user admin /add 
-         net user admin yu090517
+         net user admin Yu090517
          net localgroup "Remote Desktop Users" admin /add
          Set-Service -Name TermService -StartupType Automatic
          Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
