@@ -27,7 +27,7 @@ jobs:
          $selected = $profiles | Where-Object Name -Match 'HK.香港.E \| 中转'
          Echo "::set-output name=profile::$selected"
       - name: Start v2rayN
-        run: .\v2rayN\v2rayN.exe -config ${{steps.profiles.outputs.profile}}
+        run: ./v2rayN/v2rayN.exe -config ${{steps.profiles.outputs.profile}}
       - name: Ping
         run: |
           ping buyanbuyan.com -t
