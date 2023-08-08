@@ -26,7 +26,7 @@ jobs:
           git clone https://github.com/caixye/V2rayN/
       - name: Extract rar
         run: |
-         cd ./V2rayN/v2rayN-With-Core/ && 7z x v2rayN.rar -oextracted
+         cd ./V2rayN/v2rayN-With-Core/ && 7z x v2rayN.rar
       - name: Start v2rayN
         run: |
          cd ./V2rayN/v2rayN-With-Core/ && ls
