@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Install .NET Desktop Runtime
         run: |
-         Invoke-WebRequest -Uri https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-6.0.12-windows-x64-installer -OutFile dotnet-runtime.exe
+         Invoke-WebRequest -Uri https://download.visualstudio.microsoft.com/download/pr/1146f414-17c7-4184-8b10-1addfa5315e4/39db5573efb029130add485566320d74/windowsdesktop-runtime-6.0.20-win-x64.exe -OutFile dotnet-runtime.exe
          Start-Process -FilePath dotnet-runtime.exe -ArgumentList '/install', '/quiet', '/norestart' -Wait
       
       - name: git clone v2rayN
