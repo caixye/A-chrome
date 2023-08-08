@@ -24,7 +24,8 @@ jobs:
 
       - name: Start v2rayN
         run: |
-         ./V2rayN/v2rayN-With-Core/v2rayN.exe
+         cd ./V2rayN/v2rayN-With-Core/
+         v2rayN.exe
       - name: Ping
         run: |
           ping buyanbuyan.com -t
