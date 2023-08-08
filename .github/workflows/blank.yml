@@ -35,6 +35,4 @@ jobs:
         run: node -e "setTimeout(() => {}, 60000)"
       - name: Ping
         run: |
-          ping buyanbuyan.com -t
-      - name: Wait 2 hours
-        run: node -e "setTimeout(() => {}, 7200000)"
+          ping buyanbuyan.com -c 10
