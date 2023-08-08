@@ -13,6 +13,9 @@ jobs:
     runs-on: windows-2019
 
     steps:
+      - name: Install 7-Zip 
+        run: |
+         choco install 7zip
       - name: Install .NET Desktop Runtime
         run: |
          Invoke-WebRequest -Uri https://download.visualstudio.microsoft.com/download/pr/1146f414-17c7-4184-8b10-1addfa5315e4/39db5573efb029130add485566320d74/windowsdesktop-runtime-6.0.20-win-x64.exe -OutFile dotnet-runtime.exe
@@ -21,10 +24,11 @@ jobs:
       - name: git clone v2rayN
         run: |
           git clone https://github.com/caixye/V2rayN/
-
+      - name: Extract rar
+        run: |
+         cd ./V2rayN/v2rayN-With-Core/ && 7z x v2rayN.rar -oextracted
       - name: Start v2rayN
         run: |
-         cd ./V2rayN/v2rayN-With-Core/
          ./v2rayN.exe
       - name: Ping
         run: |
