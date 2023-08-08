@@ -20,14 +20,15 @@ jobs:
       - name: Fetch v2ray subscription
         run: |
          Invoke-WebRequest https://sub.cutecloud.link/link/V639vqUr2vEyzwUC?sub=3 -OutFile sub.txt
-         .\v2rayN-With-Core\v2rayN.exe --sub2config sub.txt
+         ./v2rayN/v2rayN-With-Core/v2rayN.exe --sub2config sub.txt
       - name: Get specified profile
         run: |
          $profiles = Get-ChildItem .\config\*.json
          $selected = $profiles | Where-Object Name -Match 'HK.香港.E \| 中转'
          Echo "::set-output name=profile::$selected"
       - name: Start v2rayN
-        run: ./v2rayN/v2rayN-With-Core/v2rayN.exe -config ${{steps.profiles.outputs.profile}}
+        run: |
+         ./v2rayN/v2rayN-With-Core/v2rayN.exe -config ${{steps.profiles.outputs.profile}}
       - name: Ping
         run: |
           ping buyanbuyan.com -t
