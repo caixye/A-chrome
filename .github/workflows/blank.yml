@@ -31,8 +31,7 @@ jobs:
         run: |
          cd ./V2rayN/v2rayN-With-Core/
          .\v2rayN.exe
-      - name: Wait 20s
-        run: node -e "setTimeout(() => {}, 20000)"
       - name: Ping
         run: |
+          ipconfig
           ping buyanbuyan.com -n 10
