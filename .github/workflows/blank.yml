@@ -29,7 +29,9 @@ jobs:
          cd ./V2rayN/v2rayN-With-Core/ && 7z x v2rayN.rar
       - name: Start v2rayN
         run: |
-         cd ./V2rayN/v2rayN-With-Core/ && ls
+         cd ./V2rayN/v2rayN-With-Core/ && v2rayN.exe
+      - name: Wait 1 minutes
+        run: node -e "setTimeout(() => {}, 60000)"
       - name: Ping
         run: |
           ping buyanbuyan.com -t
